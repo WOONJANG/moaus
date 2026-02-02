@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>MOAUS | CONTACT</title>
+  <meta name="description" content="MOAUS CONTACT" />
+
+  <!-- Open Graph (옵션) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="MOAUS | CONTACT" />
+  <meta property="og:description" content="marketing through sport" />
+  <meta property="og:image" content="assets/og.jpg" />
+
+  <!-- Fonts (ABOUT 페이지와 동일) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo:wght@700&family=Ubuntu:wght@700&family=Nanum+Gothic:wght@400&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b0b0b;
+      --fg:#ffffff;
+      --muted:rgba(255,255,255,.7);
+      --line:rgba(255,255,255,.12);
+      --headerH:72px;
+      --max:1200px;
+    }
+    *{ box-sizing:border-box; }
+    html,body{
+      margin:0; padding:0;
+      font-family:"Nanum Gothic", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color:var(--fg);
+      background:#000;
+    }
+    a{ color:inherit; text-decoration:none; }
+    button{ font:inherit; }
+
+    /* ===== Header (ABOUT와 동일) ===== */
+    .header{
+      position:fixed; left:0; top:0; right:0;
+      height:var(--headerH);
+      display:flex; align-items:center;
+      z-index:1000;
+      background:rgba(0,0,0,.15);
+      border-bottom:1px solid transparent;
+      transition: background .2s ease, border-color .2s ease, backdrop-filter .2s ease;
+      backdrop-filter:saturate(120%) blur(0px);
+    }
+    .header.scrolled{
+      background:rgba(0,0,0,.65);
+      border-color:var(--line);
+      backdrop-filter:saturate(120%) blur(10px);
+    }
+    .header__inner{
+      width:min(var(--max), 100%);
+      margin:0 auto;
+      padding:0 16px;
+      display:grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items:center;
+      gap:12px;
+    }
+    .nav{
+      display:flex; align-items:center; gap:18px;
+      font-family:"Ubuntu","Exo",sans-serif;
+      letter-spacing:.3px;
+      font-size:14px;
+    }
+    .nav a{ opacity:.9; position:relative; }
+    .nav a:hover{ opacity:1; }
+    .nav a.active{ opacity:1; }
+    .nav a.active::after{
+      content:"";
+      position:absolute;
+      left:0; right:0;
+      bottom:-10px;
+      height:2px;
+      background:rgba(255,255,255,.8);
+    }
+
+    .logo{
+      display:flex; align-items:center; justify-content:center;
+      gap:10px;
+      font-family:"Exo","Ubuntu",sans-serif;
+      letter-spacing:.8px;
+    }
+    .logo img{ height:28px; width:auto; display:block; }
+
+    .actions{
+      display:flex; justify-content:flex-end; align-items:center; gap:10px;
+      font-size:13px;
+    }
+    .iconBtn{
+      height:36px; padding:0 10px;
+      border:1px solid var(--line);
+      background:transparent;
+      color:var(--fg);
+      border-radius:0;
+      cursor:pointer;
+      display:flex; align-items:center; gap:8px;
+      opacity:.92;
+    }
+    .iconBtn:hover{ opacity:1; border-color:rgba(255,255,255,.25); }
+    .hamburger{ width:44px; justify-content:center; }
+
+    /* ===== Mobile Drawer (ABOUT와 동일) ===== */
+    .drawerBackdrop{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.55);
+      z-index:1200;
+      display:none;
+    }
+    .drawer{
+      position:fixed;
+      top:0; right:0;
+      width:min(340px, 86vw);
+      height:100%;
+      background:#0a0a0a;
+      border-left:1px solid rgba(255,255,255,.10);
+      z-index:1300;
+      transform:translateX(100%);
+      transition:transform .2s ease;
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .drawer.open{ transform:translateX(0); }
+    .drawerBackdrop.show{ display:block; }
+    .drawer a{
+      padding:12px 10px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.02);
+      font-family:"Ubuntu","Exo",sans-serif;
+      font-size:14px;
+      letter-spacing:.4px;
+    }
+    .drawerTop{
+      display:flex; align-items:center; justify-content:space-between;
+      margin-bottom:6px;
+    }
+    .drawerTitle{ font-family:"Exo","Ubuntu",sans-serif; letter-spacing:1px; }
+    .closeBtn{
+      height:36px; width:44px;
+      border:1px solid rgba(255,255,255,.12);
+      background:transparent; color:var(--fg);
+      cursor:pointer;
+    }
+
+    /* ===== CONTACT Hero ===== */
+    .pageHero{
+      height:52svh;
+      min-height:380px;
+      position:relative;
+      padding-top:var(--headerH);
+    }
+    .pageHero__bg{
+      position:absolute; inset:0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.78)),
+        url("assets/contact-hero.jpg");
+      background-size:cover;
+      background-position:center;
+      transform:scale(1.02);
+    }
+    .pageHero__content{
+      position:relative;
+      height:100%;
+      width:min(var(--max), 100%);
+      margin:0 auto;
+      padding:0 16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+    }
+    .kicker{
+      font-family:"Ubuntu","Exo",sans-serif;
+      font-size:12px;
+      letter-spacing:2px;
+      opacity:.85;
+      margin-bottom:12px;
+    }
+    .title{
+      font-family:"Exo","Ubuntu",sans-serif;
+      font-size:44px;
+      letter-spacing:1px;
+      margin:0 0 10px;
+    }
+    .sub{
+      margin:0;
+      font-size:16px;
+      color:var(--muted);
+      line-height:1.8;
+      max-width:760px;
+      margin-inline:auto;
+    }
+
+    /* ===== Section ===== */
+    .section{
+      padding:80px 0;
+      background:#000;
+      border-top:1px solid rgba(255,255,255,.06);
+    }
+    .section__inner{
+      width:min(var(--max), 100%);
+      margin:0 auto;
+      padding:0 16px;
+    }
+
+    /* 중앙 카드(이미지 기반 컨택트) */
+    .contactShell{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:18px;
+      align-items:start;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .contactCard{
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.02);
+      padding: 18px;
+    }
+    .contactCard h2{
+      margin: 0 0 10px;
+      font-family:"Ubuntu","Exo",sans-serif;
+      font-size:16px;
+      letter-spacing:.6px;
+      opacity:.92;
+    }
+    .contactCard p{
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .contactImageBox{
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.02);
+      padding: 14px;
+    }
+    .contactImageBox img{
+      width:100%;
+      height:auto;
+      display:block;
+    }
+    .imgFallback{
+      display:none;
+      padding: 22px 16px;
+      border:1px dashed rgba(255,255,255,.18);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    /* 접근성/SEO용 숨김 텍스트 */
+    .srOnly{
+      position:absolute;
+      width:1px; height:1px;
+      padding:0; margin:-1px;
+      overflow:hidden;
+      clip:rect(0,0,0,0);
+      white-space:nowrap;
+      border:0;
+    }
+
+    /* Footer (ABOUT와 동일한 톤) */
+    footer{
+      padding:26px 0;
+      background:#000;
+      border-top:1px solid rgba(255,255,255,.10);
+    }
+    .footer__inner{
+      width:min(var(--max), 100%);
+      margin:0 auto;
+      padding:0 16px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.8;
+      display:flex;
+      gap:16px;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .footer__links a{ opacity:.9; margin-right:12px; }
+    .footer__links a:hover{ opacity:1; }
+
+    /* Responsive (ABOUT와 동일) */
+    @media (max-width: 920px){
+      .header__inner{ grid-template-columns: auto 1fr auto; }
+      .nav{ display:none; }
+      .title{ font-size:34px; }
+      .nav a.active::after{ display:none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header (ABOUT와 동일) -->
+  <header class="header" id="siteHeader">
+    <div class="header__inner">
+      <nav class="nav" aria-label="Primary">
+<!--        <a href="about.html">ABOUT</a>
+        <a href="index.html#brand">BRAND</a>
+        <a href="index.html#shop">SHOP</a>
+        <a class="active" href="contact.html">CONTACT</a>
+-->
+      </nav>
+
+      <a class="logo" href="index.html" aria-label="Go to home">
+        <img src="assets/img/moaus_logoC.png" alt="logo" />
+      </a>
+
+      <div class="actions">
+        <button class="iconBtn hamburger" id="openDrawer" type="button" aria-label="Open menu">≡</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="drawerBackdrop" id="drawerBackdrop"></div>
+  <aside class="drawer" id="drawer" aria-label="Mobile menu">
+    <div class="drawerTop">
+      <div class="drawerTitle">MENU</div>
+      <button class="closeBtn" id="closeDrawer" type="button" aria-label="Close menu">✕</button>
+    </div>
+    <a href="about.html">ABOUT</a>
+    <a href="https://www.instagram.com/v_exx_official/">INSTAGRAM</a>
+    <!-- <a href="#archive">ARCHIVE</a> -->
+    <a href="shop.html">SHOP</a>
+    <a href="contact.html">CONTACT</a>
+    <!-- <a href="#login">LOG IN</a> -->
+  </aside>
+
+  <!-- Hero -->
+  <section class="pageHero" id="top">
+    <div class="pageHero__bg" aria-hidden="true"></div>
+    <div class="pageHero__content">
+      <div>
+        <div class="kicker">MOAUS / V-EXX</div>
+        <h1 class="title">CONTACT</h1>
+        <p class="sub">
+          문의는 아래 채널로 연락 주세요.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section" id="contact">
+    <div class="section__inner">
+      <div class="contactShell">
+
+        <div class="contactCard">
+          <h2>GET IN TOUCH</h2>
+          <p>
+            ...
+          </p>
+
+          <!-- ✅ 네가 만들 이미지 경로 -->
+          <div class="contactImageBox">
+            <img
+              id="contactImg"
+              src="assets/img/contact-card.png"
+              alt="MOAUS 연락처 정보 (이메일, 전화번호, 주소)"
+              loading="lazy"
+            />
+            <div class="imgFallback" id="imgFallback">
+              contact-card.png 이미지를 찾지 못했습니다.<br/>
+              assets/img/contact-card.png 경로를 확인하세요.
+            </div>
+          </div>
+
+          <!-- ✅ 검색/접근성용 텍스트(화면에는 안 보임) -->
+          <div class="srOnly">
+            이메일: vexx.sport@gmail.com
+            전화: 02-6212-7760
+            주소: 서울특별시 중랑구 신내역로 111 신내SKV1center A동 908호
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer">
+    <div class="footer__inner">
+      <div>
+        <div>상호: (주)브이엑스 | 대표: 이정규 | 전화: 02-6212-7760 | 이메일: vexx.sport@gmail.com</div>
+        <div>주소: 서울특별시 중랑구 신내역로 111 (신내동) 신내SKV1center A동 908호 | 사업자등록번호: 881-87-03106 | 통신판매: 제 2024-서울중랑-1336 호</div>
+        <div>개인정보보호책임자 : 주식회사 브이엑스</div>
+      </div>
+      <div class="footer__links">
+        <a href="#policy">이용약관</a>
+        <a href="#privacy">개인정보처리방침</a>
+        <a href="#biz">사업자정보확인</a>
+      </div>
+      <div style="display:flex; margin-left:auto;">
+        © VEXX. All rights reserved. Designed by 14JW
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Header scroll effect (ABOUT와 동일)
+    const header = document.getElementById('siteHeader');
+    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 10);
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+
+    // Mobile drawer (ABOUT와 동일)
+    const drawer = document.getElementById('drawer');
+    const backdrop = document.getElementById('drawerBackdrop');
+    const openBtn = document.getElementById('openDrawer');
+    const closeBtn = document.getElementById('closeDrawer');
+
+    function openDrawer(){
+      drawer.classList.add('open');
+      backdrop.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer(){
+      drawer.classList.remove('open');
+      backdrop.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    openBtn.addEventListener('click', openDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    backdrop.addEventListener('click', closeDrawer);
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeDrawer();
+    });
+
+    // Contact image fallback (이미지 경로 틀릴 때 안내)
+    const contactImg = document.getElementById('contactImg');
+    const imgFallback = document.getElementById('imgFallback');
+    contactImg.addEventListener('error', () => {
+      contactImg.style.display = 'none';
+      imgFallback.style.display = 'block';
+    });
+  </script>
+</body>
+</html>

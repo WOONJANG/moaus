@@ -251,6 +251,29 @@
       .section__inner{ grid-template-columns: 1fr; }
       .actions .textBtn{ display:none; } /* 로그인/검색 텍스트 숨기고 싶으면 */
     }
+	.site-footer small { color:#999; }
+
+.credit-toggle{
+  display:inline;
+  padding:0;
+  margin:0;
+  border:0;
+  background:none;
+  color:#999;
+  cursor:pointer;
+  font:inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.credit-toggle:hover{ color:#ccc; }
+
+.credit-toggle:focus-visible{
+  outline:2px solid #999;
+  outline-offset:3px;
+  border-radius:6px;
+}
+
   </style>
 </head>
 <body>
@@ -388,7 +411,18 @@
         <a href="https://www.ftc.go.kr/bizCommPop.do?wrkr_no=8818703106">사업자정보확인</a>
       </div>
 	  <div style="display: flex; margin-left: auto;">
-	  © VEXX. All rights reserved. Developed by WOONIVERSE.
+	  © VEXX. All rights reserved. Developed by&nbsp;
+	  <button
+      type="button"
+      class="credit-toggle"
+      id="devCredit"
+      data-default="WOONIVERSE."
+      data-badge="Build v1.3.2 • Updated 2026-02-03"
+      aria-label="개발 정보 보기"
+	  style="text-decoration: none;"
+    >
+      WOONIVERSE.
+    </button>
 	  </div>
     </div>
   </footer>
@@ -433,6 +467,46 @@
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeDrawer();
     });
+	
+	  (function () {
+    const el = document.getElementById("devCredit");
+    if (!el) return;
+
+    const defaultText = el.dataset.default || el.textContent;
+    const badgeText = el.dataset.badge || "Build v1.0.0";
+
+    let timer = null;
+    let showingBadge = false;
+
+    function setText(next) {
+      el.textContent = next;
+    }
+
+    el.addEventListener("click", () => {
+      clearTimeout(timer);
+
+      showingBadge = !showingBadge;
+      setText(showingBadge ? badgeText : defaultText);
+
+      // 과하지 않게 자동 원복
+      if (showingBadge) {
+        timer = setTimeout(() => {
+          showingBadge = false;
+          setText(defaultText);
+        }, 1500);
+      }
+    });
+
+    // ESC로 원복 (키보드 사용자 배려)
+    el.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        clearTimeout(timer);
+        showingBadge = false;
+        setText(defaultText);
+        el.blur();
+      }
+    });
+  })();
   </script>
 </body>
 </html>
